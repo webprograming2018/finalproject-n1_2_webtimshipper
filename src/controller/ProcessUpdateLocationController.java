@@ -44,14 +44,16 @@ public class ProcessUpdateLocationController extends HttpServlet {
 		String id = request.getParameter("id");
 		String lat3 = request.getParameter("lat3");
 		String lng3 = request.getParameter("lng3");
-
+		
+		System.out.println(lat3);
+		
 		UserOrder order = new UserOrder();
 		order.setId(Integer.parseInt(id));
 		order.setLat3(Float.parseFloat(lat3));
 		order.setLng3(Float.parseFloat(lng3));
 
 		userOrderDAO.shipperUpdateLocation(order);
-
+		
 		response.sendRedirect(request.getContextPath() + "/home-shipper/update-location");
 	}
 

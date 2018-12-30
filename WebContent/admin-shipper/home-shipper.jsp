@@ -258,7 +258,6 @@ body {
 </style>
 </head>
 <body>
-
 	<%@ include file="left-menu.jsp"%>
 	<div class="mian">
 		<section class="content">
@@ -275,10 +274,8 @@ body {
 										</a></td>
 										<td>
 											<form action="home-shipper/pick-up" method="post">
-											<div class="media" id="test'${order.id}'"></div> 
-											</form>
-											<script
-												type="text/javascript">
+												<div class="media" id="test'${order.id}'"></div>
+											</form> <script type="text/javascript">
 											
 												var lat=<%=session.getAttribute("lat")%>
 												var lng=<%=session.getAttribute("lng")%>
@@ -293,7 +290,7 @@ body {
 												
 												if(distance_miles<10000){
 													var html='';
-													var createdDate = '<div class="media-body"><input type="hidden" name="id" value="${order.id}"/><span class="media-meta pull-right"><c:out value="${order.createdDate}"/></span><h4 class="title">Lorem Impsum <span class="pull-right pagado"><c:out value="${order.fee}"/>VND</span></h4><p class="summary"><c:out value="${order.content}"/></p><input type="submit" class="btn" value="Nhận đơn"/></div>';
+													var createdDate = '<div class="media-body"><input type="hidden" name="id" value="${order.id}"/><span class="media-meta pull-right"><c:out value="${order.createdDate}"/></span><h4 class="title">Nội Dung<span class="pull-right pagado"><c:out value="${order.fee}"/>VND</span></h4><p class="summary"><c:out value="${order.content}"/></p><input type="submit" class="btn" value="Nhận đơn"/></div>';
 													html+=createdDate;
 													var res = document.getElementById("test'"+${order.id} +"'");
 													res.innerHTML = html;

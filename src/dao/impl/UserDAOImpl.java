@@ -44,7 +44,7 @@ public class UserDAOImpl implements UserDAO {
 	public void register(User user) {
 		try {
 			connection = DBConnection.connect();
-			String sql = "INSERT INTO user(username, password, address, role_id, lat, lng) values(?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO user(username, password, address, role_id, lat, lng, avatar) values(?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, user.getUsername());
 			preparedStatement.setString(2, user.getPassword());
@@ -52,7 +52,8 @@ public class UserDAOImpl implements UserDAO {
 			preparedStatement.setInt(4, user.getRoleId());
 			preparedStatement.setFloat(5, user.getLat());
 			preparedStatement.setFloat(6, user.getLng());
-
+			preparedStatement.setString(7, user.getAvatar());
+			
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

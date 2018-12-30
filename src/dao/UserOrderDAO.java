@@ -26,4 +26,6 @@ public interface UserOrderDAO {
 	void shipperPickupOrder(UserOrder userOrder);
 
 	List<UserOrder> getPickedOrders(Integer shipeperId);
+	
+	UserOrder searchLocationOrder(SearchOrder id);
 }

@@ -13,6 +13,7 @@ public class User implements Serializable {
 	private Integer roleId;
 	private Float lat;
 	private Float lng;
+	private String avatar;
 
 	public User() {
 		super();
@@ -82,6 +83,14 @@ public class User implements Serializable {
 
 	public void setLng(Float lng) {
 		this.lng = lng;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 }

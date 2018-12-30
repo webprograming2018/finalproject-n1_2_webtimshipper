@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import dao.UserOrderDAO;
 import dao.impl.UserOrderDAOImpl;
 import model.UserOrder;
@@ -44,7 +46,9 @@ public class UpdateLocationController extends HttpServlet {
 		orders.forEach(order -> {
 			System.out.println("content:" + order.getContent());
 		});
+		String orderJsons = new Gson().toJson(orders);
 		request.setAttribute("orders", orders);
+		request.setAttribute("orderJsons", orderJsons);
 		RequestDispatcher rd = request.getRequestDispatcher("/admin-shipper/update-location.jsp");
 		rd.forward(request, response);
 

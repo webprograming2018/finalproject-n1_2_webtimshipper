@@ -43,10 +43,12 @@ public class SearchOrderController extends HttpServlet {
 		SearchOrder searchOrder = new SearchOrder();
 		String orderId = request.getParameter("order_id");
 		searchOrder.setUserOrderId(Integer.parseInt(orderId));
-		List<UserOrder> orders = userOrderDAO.searchOrder(searchOrder);
-		request.setAttribute("orders", orders);
-		System.out.println(orders.size());
-		response.sendRedirect("/WebApp-Ship/home-shop/search-order");
+		UserOrder order = userOrderDAO.searchLocationOrder(searchOrder);
+		request.setAttribute("orders", order);
+		System.out.println(order.getLat3());
+
+		RequestDispatcher rd = request.getRequestDispatcher("/admin-shop/search-order.jsp");
+		rd.forward(request, response);
 	}
 
 }

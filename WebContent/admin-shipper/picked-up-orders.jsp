@@ -260,9 +260,7 @@ body {
 <body>
 
 	<%@ include file="left-menu.jsp"%>
-
 	<div class="mian">
-
 		<section class="content">
 		<div class="col-md-8 col-md-offset-2">
 			<div class="panel panel-default">
@@ -270,7 +268,6 @@ body {
 					<div class="table-container1">
 						<table class="table table-filter">
 							<tbody>
-
 								<c:forEach items="${orders}" var="order">
 									<tr data-status="pagado">
 										<td><a href="javascript:;" class="star"> <i

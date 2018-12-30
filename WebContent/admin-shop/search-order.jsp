@@ -37,7 +37,9 @@ body {
 .mian {
 	width: 1570px;
 	float: right;
-	height: 30%;
+	height: 100%;
+	/* display: flex;
+	flex-direction: column; */
 }
 
 .mian form {
@@ -134,39 +136,85 @@ body {
 	font-size: 30px;
 }
 
+#map {
+	height: 400px;
+}
 </style>
 <body>
+
 	<div class="wrapper">
 		<%@ include file="left-menu.jsp"%>
 		<div class="mian">
-			<form action="<%=request.getContextPath()%>/home-shop/search-order"
+			<form class="search-form"
+				action="<%=request.getContextPath()%>/home-shop/search-order"
 				method="post">
 				<div class="form-group mx-sm-3 mb-2">
 					<label for="fee">Mã vận đơn:</label> <input type="text"
 						class="form-control" id="order_id" name="order_id">
 				</div>
 				<div class="form-group mx-sm-3 mb-2">
-					<button type="submit" class="btn btn-primary mb-2" onclick="initMap()">Tra cứu vận đơn</button>
+					<button type="submit" class="btn btn-primary mb-2"
+						onclick="initMap()">Tra cứu vận đơn</button>
 				</div>
 			</form>
+			<div id="map" class="mx-sm-3 mb-2"></div>
 		</div>
-		<div id="map"></div>
 	</div>
-	<script type="text/javascript">
+
+	<script>
 		var map;
+		var x1 = {lat : ${orders.lat1},lng : ${orders.lng1}};
+		var x2 = {lat : ${orders.lat2},lng : ${orders.lng2}};
+		var x3 = {lat : ${orders.lat3},lng : ${orders.lng3}};
+
 		function initMap() {
 			map = new google.maps.Map(document.getElementById('map'), {
 				zoom : 16,
 				center : {
-					lat : 37.772,
-					lng : -122.214
+					lat : 20.97,
+					lng : 105.7
 				},
 				mapTypeId : 'terrain'
 			});
 
+			var flightPathCoordinates = [ x1, x3];
+
+			flightPath = new google.maps.Polyline({
+				path : flightPathCoordinates,
+				strokeColor : '#FF0000',
+				strokeOpacity : 1.0,
+				strokeWeight : 2
+			});
+			
+			var marker = new google.maps.Marker({
+		          position: x1,
+		          map: map,
+		          title: 'Điểm đi'
+		        });
+			
+			var marker1 = new google.maps.Marker({
+		          position: x2,
+		          map: map,
+		          title: 'Điểm đến'
+		        });
+			
+			var marker2 = new google.maps.Marker({
+		          position: x3,
+		          map: map,
+		          title: 'Vị trí đơn hàng hiện tại'
+		        });
+			addLine();
+		}
+		function addLine() {
+			flightPath.setMap(map);
+		}
+
+		function removeLine() {
+			flightPath.setMap(null);
 		}
 	</script>
-	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8mVhoPgUukaq-KTYnjA2_Noh_jPMt_bU&callback=initMap"></script>
+	<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8mVhoPgUukaq-KTYnjA2_Noh_jPMt_bU&callback=initMap">
+	</script>
 </body>
 </html>

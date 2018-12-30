@@ -275,7 +275,8 @@ body {
 												method="post">
 												<div class="media">
 													<div class="media-body">
-														<div id="position"></div>
+														<input class="lat3" type="hidden" name="lat3" value="" />
+														<input class="lng3" type="hidden" name="lng3" value="" />
 														<input type="hidden" name="id" value="${order.id}" /><span
 															class="media-meta pull-right"><c:out
 																value="${order.createdDate}" /></span>
@@ -286,12 +287,34 @@ body {
 														<p class="summary">
 															<c:out value="${order.content}" />
 														</p>
-														<input type="submit" class="btn" value="cập nhật vị trí" />
+														<input type="submit" class="btn" value="Nhận đơn" />
 													</div>
 												</div>
 											</form>
 										</td>
 									</tr>
+									<script type="text/javascript">
+										$(document).ready(function() {
+											getLocation();
+										});
+
+										function getLocation() {
+											if (navigator.geolocation) {
+												navigator.geolocation
+														.getCurrentPosition(showPosition);
+											}
+										}
+										function showPosition(position) {
+											var lat = (position.coords.latitude + '')
+													.slice(0, 5);
+											var lng = (position.coords.longitude + '')
+													.slice(0, 5);
+											$(".lat3").val(lat);
+											$(".lng3").val(lng);
+											console.log("lat:" + lat);
+											console.log("lng:" + lng);
+										}
+									</script>
 								</c:forEach>
 							</tbody>
 						</table>
@@ -300,27 +323,5 @@ body {
 			</div>
 		</div>
 		</section>
-		<script>
-			$(document).ready(function() {
-				getLocation();
-			});
-			var x = document.getElementById('position');
-			function getLocation() {
-				if (navigator.geolocation) {
-					navigator.geolocation.getCurrentPosition(showPosition);
-				} else {
-					x.innerHTML = "Geolocation is not supported by this browser.";
-				}
-			}
-
-			function showPosition(position) {
-
-				var lat = (position.coords.latitude + '').slice(0, 5);
-				var lng = (position.coords.longitude + '').slice(0, 5);
-				x.innerHTML = '<input type="hidden" name="lat3" value="'+lat+'"/><input type="hidden" name="lng3" value="'+lng+'"/>';
-				console.log("lat:" + lat);
-				console.log("lng:" + lng);
-			}
-		</script>
 </body>
 </html>

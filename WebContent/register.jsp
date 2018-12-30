@@ -120,7 +120,8 @@ body {
 </head>
 <body>
 	<div class="signup-form">
-		<form action="<%=request.getContextPath()%>/register" method="post">
+		<form action="<%=request.getContextPath()%>/register" method="post"
+			enctype="multipart/form-data">
 			<h2>Đăng ký</h2>
 			<div class="form-group">
 				<div class="input-group">

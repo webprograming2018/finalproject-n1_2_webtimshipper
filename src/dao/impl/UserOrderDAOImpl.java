@@ -256,4 +256,51 @@ public class UserOrderDAOImpl implements UserOrderDAO {
 		return null;
 	}
 
+	@Override
+	public UserOrder searchLocationOrder(SearchOrder searchOrder) {
+		try {
+			connection = DBConnection.connect();
+			StringBuilder sql = new StringBuilder();
+			sql.append(
+					"SELECT * FROM user_order uo INNER JOIN user u ON uo.created_by = u.id WHERE 1=1 AND LCASE (uo.content) LIKE LCASE(?) AND uo.shipperId IS NOT NULL");
+
+			if (searchOrder.getPage() != null && searchOrder.getPageSize() != null) {
+				sql.append(" LIMIT " + searchOrder.getPageSize() + " OFFSET "
+						+ (searchOrder.getPage() - 1) * searchOrder.getPageSize());
+			}
+			if (searchOrder.getUserOrderId() != null) {
+				sql.append(" AND uo.id=?");
+			}
+			PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+			if (searchOrder.getUserOrderId() != null) {
+				preparedStatement.setInt(2, searchOrder.getUserOrderId());
+			}
+			if (searchOrder.getKeyWord() == null) {
+				preparedStatement.setString(1, "%%");
+			} else {
+				preparedStatement.setString(1, "%" + searchOrder.getKeyWord() + "%");
+			}
+			ResultSet rs = preparedStatement.executeQuery();
+			UserOrder order = new UserOrder();
+			while (rs.next()) {
+				order.setId(rs.getInt(1));
+				order.setCreatedBy(rs.getInt(2));
+				order.setContent(rs.getString(3));
+				order.setLat1(rs.getFloat(4));
+				order.setLng1(rs.getFloat(5));
+				order.setFee(rs.getLong(6));
+				order.setCreatedDate(rs.getDate(7));
+				order.setStatus(rs.getInt(8));
+				order.setLat2(rs.getFloat(9));
+				order.setLng2(rs.getFloat(10));
+				order.setLat3(rs.getFloat(11));
+				order.setLng3(rs.getFloat(12));
+			}
+			return order;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+
 }
